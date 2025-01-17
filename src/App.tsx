@@ -8,7 +8,10 @@ import {
   SimpleForm,
   TextInput,
   BooleanField,
-  BooleanInput
+  BooleanInput,
+  Edit,
+  EditButton,
+  DeleteButton
 } from "react-admin";
 import { Layout } from "./Layout";
 import restProvider from 'ra-data-simple-rest'
@@ -24,6 +27,7 @@ export const App = () => (
       name="users" 
       list={UserList}
       create={UserCreate}
+      edit={UserEdit}
     />
   </Admin>
 );
@@ -39,6 +43,8 @@ const UserList = (props: any) => {
       <TextField source='last_name' />
       <BooleanField source="ads_enabled" />
       <BooleanField source="is_active" />
+      <EditButton />
+      <DeleteButton />
     </Datagrid>
   </List>
   )
@@ -47,12 +53,12 @@ const UserList = (props: any) => {
 
 const UserCreate = (props: any) => {
 
-  const postDefaultValue = () => ({ updated_at: new Date() });
+ //const postDefaultValue = () => ({ id: Math.random() * 100 });
 
   return (
     <Create title='Create a User' {...props}>
-      <SimpleForm defaultValues={postDefaultValue}>
-        <TextInput source='id' />
+      <SimpleForm>
+        <TextInput source='phone_number' />
         <TextInput source='first_name' />
         <TextInput source='last_name' />
         <BooleanInput source="ads_enabled" />
@@ -61,4 +67,18 @@ const UserCreate = (props: any) => {
     </Create>
   )
 }
+
+
+const UserEdit = (props: any) => {
+  return (
+    <Edit title='Edit User' {...props}>
+      <SimpleForm>
+        <TextInput disabled source='id' />
+        <TextInput source='first_name' />
+        <TextInput source='last_name' />
+      </SimpleForm>
+    </Edit>
+  )
+}
+
 
