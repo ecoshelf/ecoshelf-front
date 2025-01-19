@@ -73,9 +73,11 @@ const UserEdit = (props: any) => {
   return (
     <Edit title='Edit User' {...props}>
       <SimpleForm>
-        <TextInput disabled source='id' />
+        <TextInput source='phone_number' />
         <TextInput source='first_name' />
         <TextInput source='last_name' />
+        <BooleanInput source="ads_enabled" />
+        <BooleanInput source="is_active" />
       </SimpleForm>
     </Edit>
   )
