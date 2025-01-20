@@ -1,86 +1,22 @@
-import {
-  Admin,
-  Resource,
-  List,
-  Datagrid,
-  TextField,
-  Create,
-  SimpleForm,
-  TextInput,
-  BooleanField,
-  BooleanInput,
-  Edit,
-  EditButton,
-  DeleteButton
-} from "react-admin";
-import { Layout } from "./Layout";
-import restProvider from 'ra-data-simple-rest'
-import { authProvider } from "./authProvider";
+import { Crud } from './Pages/CRUDPage/index';
+import { RouterProvider, Routes, Route, createBrowserRouter } from 'react-router-dom';
+import LandingPage from "./Pages/LandingPage";
 
-export const App = () => (
-  <Admin 
-    layout={Layout} 
-    authProvider={authProvider} 
-    dataProvider={restProvider('http://localhost:8000')}
-  >
-    <Resource 
-      name="users" 
-      list={UserList}
-      create={UserCreate}
-      edit={UserEdit}
-    />
-  </Admin>
+const App = () => {
+  const router = createBrowserRouter(
+    [
+        {
+            path: "*",
+            element: (
+                <Routes>
+                    <Route path="/" element={<LandingPage />} />
+                    <Route path="/admin/*" element={<Crud />} />
+                </Routes>
+            ),
+        },
+    ],
 );
+  return <RouterProvider router={router} />;
+};
 
-const UserList = (props: any) => {
-
-
-  return (
-  <List {...props}>
-    <Datagrid>  
-      <TextField source='phone_number' />
-      <TextField source='first_name' />
-      <TextField source='last_name' />
-      <BooleanField source="ads_enabled" />
-      <BooleanField source="is_active" />
-      <EditButton />
-      <DeleteButton />
-    </Datagrid>
-  </List>
-  )
-
-}
-
-const UserCreate = (props: any) => {
-
- //const postDefaultValue = () => ({ id: Math.random() * 100 });
-
-  return (
-    <Create title='Create a User' {...props}>
-      <SimpleForm>
-        <TextInput source='phone_number' />
-        <TextInput source='first_name' />
-        <TextInput source='last_name' />
-        <BooleanInput source="ads_enabled" />
-        <BooleanInput source="is_active" />
-      </SimpleForm>
-    </Create>
-  )
-}
-
-
-const UserEdit = (props: any) => {
-  return (
-    <Edit title='Edit User' {...props}>
-      <SimpleForm>
-        <TextInput source='phone_number' />
-        <TextInput source='first_name' />
-        <TextInput source='last_name' />
-        <BooleanInput source="ads_enabled" />
-        <BooleanInput source="is_active" />
-      </SimpleForm>
-    </Edit>
-  )
-}
-
-
+export default App;
